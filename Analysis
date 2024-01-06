@@ -1,0 +1,68 @@
+SELECT * FROM  hrdataset
+--1.Top five(5) most paid Employees AND Position?
+
+SELECT Employee_name AS Most_paid_employee, position, Salary
+FROM hrdataset
+ORDER BY Salary DESC
+LIMIT 5;
+
+--2.Employees with terminated contracts and reason for termination
+
+SELECT
+  employee_name,
+  DateofTermination,
+  position,
+  TermReason AS reason_for_termination
+FROM hrdataset
+WHERE DateofTermination IS NOT NULL AND DateofTermination != ''
+GROUP BY employee_name, DateofTermination, position, TermReason;
+
+--3. predicting who is going to retire next.
+
+SELECT Employee_name, Position,dayslatelast30, Absences, Salary AS Lowest_earner
+FROM hrdataset
+ORDER BY Salary ASC
+LIMIT 5;
+
+--4.BEST Recruitment source if we want to ensure a diverse organisation?
+
+SELECT RecruitmentSource, COUNT(*) AS TOP_5_Best_Recruitmentsource
+FROM hrdataset
+GROUP BY RecruitmentSource
+ORDER BY TOP_5_Best_Recruitmentsource DESC
+LIMIT 5;
+
+--5.State with the highesr Employee? 
+
+SELECT State, COUNT(state) AS state_with_highest_Employee
+FROM hrdataset
+GROUP BY State
+ORDER BY state_with_highest_Employee DESC
+LIMIT 3;
+
+--6. oldest Employee in the company
+
+SELECT Employee_Name, MIN(Dateofhire) AS first_hired_employee
+FROM hrdataset
+GROUP BY Employee_Name
+ORDER BY first_hired_employee ASC
+LIMIT 1;
+
+--7.Most recruiting managers?
+
+SELECT Managername, COUNT(Managername) AS most_recruiting_manager
+FROM hrdataset
+GROUP BY Managername
+ORDER BY most_recruiting_manager DESC;
+
+
+--8.Employee marital status AND Position
+SELECT 
+    Employee_name,
+    MaritalDesc As Marital_status,
+    Position
+FROM 
+    hrdataset
+GROUP BY 
+    Employee_name,
+    MaritalDesc,Position;
